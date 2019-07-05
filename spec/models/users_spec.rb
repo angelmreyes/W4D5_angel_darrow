@@ -74,8 +74,8 @@ RSpec.describe User, type: :model do
     end
   end
   
-  describe "reset_session_token!" do
-    it "resets the session token" do
+  describe "reset_session_token! and save to database" do
+    it "resets the session token and saves to database" do
       let!(:user) { create(:user) }
     
       session_token1 = user.session_token
