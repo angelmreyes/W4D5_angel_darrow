@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   
-  it{ should validate_presence_of :username }
-  it{ should validate_presence_of :password_digest }
-  it{ should validate_presence_of :session_token }    # ??
+  it { should validate_presence_of :username }
+  it { should validate_presence_of :password_digest }
+  it { should validate_presence_of :session_token }    # ??
+ 
+  it { should validate_length_of(:password).is_at_least(6) }
 
-  it{ should validate_length_of (:password).is_at_least(6) }
-
-  it { should have_many(:goals) }
-  it { should have_many(:cheers) }
-  it { should have_many(:comments) }
+  # it { should have_many(:goals) }
+  # it { should have_many(:cheers) }
+  # it { should have_many(:comments) }
 
 
   describe "uniqueness" do
@@ -36,13 +36,13 @@ RSpec.describe User, type: :model do
 
     context "with a valid password" do
       it "should return true" do
-        expect(user.is_password?("starwars").to be(true))
+        expect(user.is_password?("starwars")).to be(true)
       end
     end
 
     context "with an invalid password" do
       it "should return false" do
-        expect(user.is_password?("startrek").to be(false))
+        expect(user.is_password?("startrek")).to be(false)
       end
     end
   end
@@ -75,8 +75,9 @@ RSpec.describe User, type: :model do
   end
   
   describe "reset_session_token! and save to database" do
+    let!(:user) { create(:user) }
+
     it "resets the session token and saves to database" do
-      let!(:user) { create(:user) }
     
       session_token1 = user.session_token
       user.reset_session_token!
